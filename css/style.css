@@ -14,15 +14,13 @@ body {
 	width: 100%;
 	height: 100%;
 */
-/*
-	width: 640px;
-	height: 480px;
-*/
+	min-width: 640px;
+	min-height: 480px;
 /*
 	margin: 0px auto 0px auto;
 	display: inline;
 */
-	border: 2px solid #a00; 
+/* 	border: 2px solid #a00;  */
 }
 
 #buffer {
@@ -31,6 +29,10 @@ body {
 #container {
 	width: 100%;
 	text-align:center;
+/*
+	min-width: 640px;
+	min-height: 480px;
+*/
 }
 
 #videostream {
