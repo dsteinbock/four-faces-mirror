@@ -15,12 +15,13 @@
       delayImages			  			= new Array(),
       bufferSize							= 50,
       fontSize								= 20,
+      doRecord								= false,
       imgPixelData,
       cw											= ctx.canvas.width,
       ch 											= ctx.canvas.height;
 
     p.setup = function () {
-
+    
       p.size(width, height);
 /*       p.size(vWidth, vHeight); */
       p.background(20,50,0);
@@ -46,8 +47,9 @@
 /* ! Draw webcam from buffer  */
       if (WEBCAM.localMediaStream) {
 			  ctx.drawImage(WEBCAM.video, 0, 0, cw, ch);
-// 			  drawDelay();
-
+			  if(doRecord){
+	 			  drawDelay();
+ 				}
       }
       else {
 				drawInstructions();
@@ -57,9 +59,25 @@
       drawGuidelines();
 			// print debug info to screen
 			drawDebug();									// BUG: doesn't display over delayed images
-
-      window.onresize = setCanvas;            
+			
+      window.onresize = setCanvas;
     };
+
+		function printDebug(msg){
+			var tw = p.textWidth(msg);
+      p.text(msg, 10, ch-30);
+		}
+		
+		/* detect key presses */
+		p.keyPressed = function doKey(){
+			doRecord = !doRecord;
+/*
+			p.fill(255);
+			p.rect(100,100,100,100);
+			printDebug("key="+p.key);
+			p.noFill();
+*/
+		};
 
 		/* saves the current screen to buffer, then draws from buffer when it's full */
 		function drawDelay(){
