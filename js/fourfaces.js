@@ -10,8 +10,8 @@
 			buf											= WEBCAM.buf,
 			width										= window.innerWidth,
 			height									= window.innerHeight,
-			vWidth									= 640,
-			vHeight									= 480,
+			initWidth									= 640,
+			initHeight									= 480,
 			delayImages							= new Array(),
 			bufferSize							= 50,
 			fontSize								= 20,
@@ -31,8 +31,7 @@
 			currentMode							= MODE.START;
 
 		p.setup = function () {
-			p.size(width, height);
-/*			 p.size(vWidth, vHeight); */
+			 p.size(initWidth, initHeight);
 //			imgPixelData = p.pixels.toArray();
 			p.background(20,50,0);
 			p.loadPixels();
@@ -42,6 +41,7 @@
 			p.noStroke();
 			p.textFont(p.createFont("Arial",24));
 			p.textSize(fontSize);
+			setCanvas();
 		};
 
 		// Override draw function, by default it will be called 60 times per second
