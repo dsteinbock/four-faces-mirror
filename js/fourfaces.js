@@ -10,32 +10,35 @@
 			buf											= WEBCAM.buf,
 			width										= window.innerWidth,
 			height									= window.innerHeight,
-			initWidth									= 640,
-			initHeight									= 480,
+			initWidth								= 640,
+			initHeight							= 480,
 			delayImages							= new Array(),
 			bufferSize							= 50,
 			fontSize								= 20,
 			doRecord								= false,
+			doStart									= false,
 			mirrorVideo							= new Array(),
-			mirrorVideoBuffer				= new Array(),
-			mirrorDuration					= 100,
+			mirrorVideoLoop,
+			currentFrameIndex 			= 0,
+			mirrorDuration					= 90,
 			imgPixelData,
 			cw											= ctx.canvas.width,
 			ch											= ctx.canvas.height;
 		var MODE = { 
+			WEBCAM									: {name: "Webcam"},
 			START										: {name: "Start"},
 			INTRO										: {name: "Intro"},
 			RECORD									: {name: "Record"},
 			PLAYBACK								: {name: "Playback"}
 		},
-			currentMode							= MODE.START;
+			currentMode							= MODE.WEBCAM;
 
 		p.setup = function () {
 			 p.size(initWidth, initHeight);
 //			imgPixelData = p.pixels.toArray();
 			p.background(20,50,0);
 			p.loadPixels();
-			p.frameRate(60);
+			p.frameRate(15);		// will need to detect user's native webcam FPS somehow? Mine is 15, I think.
 			p.smooth();
 			p.noFill();
 			p.noStroke();
@@ -52,14 +55,22 @@
 			p.pushMatrix();
 
 			switch( currentMode ){
-				case MODE.START: {
-					drawInstructions();
+				case MODE.WEBCAM: {
+					drawRequirements();
 					if(WEBCAM.localMediaStream)
+						currentMode = MODE.START;
+					break;
+				}
+				case MODE.START: {
+					drawStartButton();
+					drawGuidelines();
+					if(doStart)
 						currentMode = MODE.INTRO;
 					break;
 				}
 				case MODE.INTRO: {
-					drawIntro();
+					drawInstructions();
+					drawGuidelines();
 					if(doRecord)
 						currentMode = MODE.RECORD;
 					break;
@@ -81,25 +92,10 @@
 				}
 				default: { alert("Error: unknown mode!") }
 			}
-/*
-			if (WEBCAM.localMediaStream) {
-				ctx.drawImage(WEBCAM.video, 0, 0, cw, ch);
-				if(doRecord){
-					recordMirror();
-				}
-				else if(doPlayback) {
-					
-				}
-			}
-			else {
-				drawInstructions();
-			}
-*/
+
 			p.popMatrix();
-			// draw guide lines
-			drawGuidelines();
 			// print debug info to screen
-			drawDebug();									// BUG: doesn't display over delayed images
+/* 			drawDebug();									// BUG: doesn't display over delayed images */
 			
 			window.onresize = setCanvas;
 		};
@@ -113,12 +109,21 @@
 		p.keyPressed = function doKey(){
 			doRecord = !doRecord;
 		};
+		
+		p.mouseClicked = function doMouse(){
+			doStart = true;
+		}
 
 		/* Playback mirror video */
 		function playbackMirror(){
-			var currentFrame = mirrorVideo.shift();
-			p.set( 0, 0, currentFrame);
-			mirrorVideo.push(currentFrame);
+			if(currentFrameIndex < mirrorVideoLoop.length) {
+				var currentFrame = mirrorVideoLoop[currentFrameIndex];
+				p.set( 0, 0, currentFrame);
+				currentFrameIndex++;
+			}
+			else {
+				currentFrameIndex = 0;
+			}
 		}
 
 		function resetMirror(){
@@ -136,9 +141,19 @@
 				p.noFill();
 			}
 			else {
+				buildLoopVideo();
 				doRecord = false;
 			}
 		}
+		
+		function buildLoopVideo(){
+			mirrorVideoLoop = mirrorVideo.slice();
+			mirrorVideo.pop();
+			mirrorVideoLoop = mirrorVideoLoop.concat( mirrorVideo.reverse());
+			mirrorVideoLoop.pop();
+			console.log("mv = " + mirrorVideo.length + ", ml = " + mirrorVideoLoop.length);
+		}
+		
 		/* saves the current screen to buffer, then draws from buffer when it's full */
 		function drawDelay(){
 			delayImages.push(p.get(0,0,cw,ch));
@@ -174,7 +189,7 @@
 
 		function drawDebug(){
 			p.fill(255);
-			var msgL = "" + (bufferSize - mirrorVideo.length);
+			var msgL = "" + (mirrorDuration - mirrorVideo.length);
 			var msgR = "cw = " + cw + " ch = " + ch;
 			var twidthL = p.textWidth(msgL);
 			var twidthR = p.textWidth(msgR);
@@ -185,13 +200,18 @@
 			p.noFill();
 		};
 
-		function drawIntro(){
-			printCenter("Hit space to record");
-		}
+		function drawRequirements(){
+			printCenter("Give the webcam permission ^^^");
+		};
 
-		function drawInstructions(){
+		function drawStartButton(){
 			printCenter("Click here to begin");
 		};
+
+		function drawInstructions(){
+			printCenter("Here's what's up. Hit space to record.");
+		};
+
 
 		function printCenter(msg){
 			var twidth = p.textWidth(msg);
