@@ -62,15 +62,16 @@
 					break;
 				}
 				case MODE.START: {
-					drawStartButton();
 					drawGuidelines();
+					drawStartButton();
 					if(doStart)
 						currentMode = MODE.INTRO;
 					break;
 				}
 				case MODE.INTRO: {
-					drawInstructions();
+					drawPreview();
 					drawGuidelines();
+					drawInstructions();
 					if(doRecord)
 						currentMode = MODE.RECORD;
 					break;
@@ -84,6 +85,7 @@
 				}
 				case MODE.PLAYBACK: {
 					playbackMirror();
+					printDebug("True Mirror mode");
 					if(doRecord){
 						resetMirror();
 						currentMode = MODE.RECORD;
@@ -154,6 +156,10 @@
 			console.log("mv = " + mirrorVideo.length + ", ml = " + mirrorVideoLoop.length);
 		}
 		
+		function drawPreview(){
+			ctx.drawImage(WEBCAM.video, 0, 0, cw, ch);		// draw frame from webcam
+		}
+		
 		/* saves the current screen to buffer, then draws from buffer when it's full */
 		function drawDelay(){
 			delayImages.push(p.get(0,0,cw,ch));
@@ -209,14 +215,15 @@
 		};
 
 		function drawInstructions(){
-			printCenter("Here's what's up. Hit space to record.");
+			printCenter("Center your face. Look into the camera. Hit space to record. Don't look away.");
 		};
 
 
 		function printCenter(msg){
 			var twidth = p.textWidth(msg);
 			p.fill(20);
-			p.rect(cw/2-twidth/2-10,ch/2-fontSize/2-10-110,twidth+20,fontSize+20);
+/* 			p.rect(cw/2-twidth/2-10,ch/2-fontSize/2-10-110,twidth+20,fontSize+20); */
+			p.rect(100,ch/2-fontSize/2-10-110,cw-200,fontSize+20);
 			p.fill(255);
 			p.text(msg, (cw-twidth)/2, ch/2-100);			 
 		}
