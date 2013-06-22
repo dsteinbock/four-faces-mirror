@@ -213,7 +213,7 @@
 			}
 			else {
 				p.fill(160);
-				msg = "h = help";
+				msg = "h = help (dev version)";
 				tw = p.textWidth(msg);
 			}
 			p.text(msg, 10, ch-30);
@@ -309,7 +309,7 @@
 		};
 
 		function drawRequirements(){
-			printCenter("Requires the Chrome browser. Click 'Allow' above to activate webcam.");
+			printCenter("Warning: Development Version. Requires the Chrome browser. Click 'Allow' above to activate webcam.");
 		};
 
 		function drawStartButton(){
