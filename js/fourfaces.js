@@ -17,6 +17,11 @@
 			fontSize								= 20,
 			doRecord								= false,
 			doStart									= false,
+			doSplit									= false,
+			showHelp								= false,
+			showLeft								= true,
+			centerlineLeft					= 0,
+			centerlineRight					= 0,
 			mirrorVideo							= new Array(),
 			mirrorVideoLoop,
 			currentFrameIndex 			= 0,
@@ -31,7 +36,16 @@
 			RECORD									: {name: "Record"},
 			PLAYBACK								: {name: "Playback"}
 		},
-			currentMode							= MODE.WEBCAM;
+		currentMode							= MODE.WEBCAM;
+		var KEY = { 
+			RECORD_TOGGLE									: {value: '32', key: 'space'},
+			HELP_TOGGLE										: {value: '104', key: 'h'},
+			SHIFT_LEFT										: {value: '122', key: 'z'},
+			SHIFT_RIGHT										: {value: '120', key: 'x'},
+			SPLIT_TOGGLE									: {value: '115', key: 's'},
+			SPLIT_LEFT										: {value: p.LEFT, key: 'left'},
+			SPLIT_RIGHT										: {value: p.RIGHT, key: 'right'}
+		};
 
 		p.setup = function () {
 			 p.size(initWidth, initHeight);
@@ -72,6 +86,7 @@
 					drawPreview();
 					drawGuidelines();
 					drawInstructions();
+					initCenterline();
 					if(doRecord)
 						currentMode = MODE.RECORD;
 					break;
@@ -85,10 +100,14 @@
 				}
 				case MODE.PLAYBACK: {
 					playbackMirror();
-					printDebug("True Mirror mode");
+					if( doSplit ){
+						splitMirror();
+					}
+					drawHelp();
 					if(doRecord){
 						resetMirror();
-						currentMode = MODE.RECORD;
+						doRecord = !doRecord;
+						currentMode = MODE.INTRO;
 					}
 					break;
 				}
@@ -103,13 +122,68 @@
 		};
 
 		function printDebug(msg){
+			p.fill(255);
 			var tw = p.textWidth(msg);
 			p.text(msg, 10, ch-30);
+			p.noFill();
 		}
 		
-		/* detect key presses */
+		function initCenterline(){
+			if(centerlineLeft == 0){
+				centerlineLeft	= Math.floor(cw / 2);
+				centerlineRight	= Math.floor(cw / 2);
+			}
+		}
+		/* FUNCTION: doKey(): detect key presses and do something 
+			s = 115, S = 83, a = 97, A = 65, z = 122, Z = 90, space = 32, arrows are coded
+		*/
 		p.keyPressed = function doKey(){
-			doRecord = !doRecord;
+			if( p.key == p.CODED ){
+				switch( p.keyCode ){
+					case KEY.SPLIT_LEFT.value: {
+						doSplit = true;
+						showLeft = true;
+						break;
+					}
+					case KEY.SPLIT_RIGHT.value: {
+						doSplit = true;
+						showLeft = false;
+						break;
+					}
+					default: break;
+				}
+			}
+			else {
+				switch( "" + p.key ){			// convert to string
+					case KEY.RECORD_TOGGLE.value: {
+						doRecord = !doRecord;
+						break;
+					}
+					case KEY.HELP_TOGGLE.value: {
+						showHelp = !showHelp;
+						break;
+					}
+					case KEY.SPLIT_TOGGLE.value: {
+						doSplit = !doSplit;
+						break;
+					}
+					case KEY.SHIFT_LEFT.value: {
+						if(showLeft)
+							centerlineLeft--;
+						else
+							centerlineRight--;
+						break;
+					}
+					case KEY.SHIFT_RIGHT.value: {										// x
+						if(showLeft)
+							centerlineLeft++;
+						else
+							centerlineRight++;
+						break;
+					}
+					default: break;
+				}				
+			}
 		};
 		
 		p.mouseClicked = function doMouse(){
@@ -126,6 +200,34 @@
 			else {
 				currentFrameIndex = 0;
 			}
+		}
+		
+		/* FUNCTION: toggle display of keyboard controls */
+		function drawHelp(){
+			var msg, tw;
+			
+			if(showHelp){
+				p.fill(255);
+				msg = "h = help   SPACE = re-record   LEFT/RIGHT = split   z/x = adjust   s = split on/off";
+				tw = p.textWidth(msg);
+			}
+			else {
+				p.fill(160);
+				msg = "h = help";
+				tw = p.textWidth(msg);
+			}
+			p.text(msg, 10, ch-30);
+			p.noFill();
+		}
+
+		/* FUNCTION splitMirror: show only half the image at a time */
+		function splitMirror(){
+			p.fill(0);
+			if(showLeft)
+				p.rect(centerlineLeft, 0, cw - centerlineLeft, ch);
+			else
+				p.rect(0, 0, centerlineRight, ch);
+			p.noFill();
 		}
 
 		function resetMirror(){
@@ -153,7 +255,7 @@
 			mirrorVideo.pop();
 			mirrorVideoLoop = mirrorVideoLoop.concat( mirrorVideo.reverse());
 			mirrorVideoLoop.pop();
-			console.log("mv = " + mirrorVideo.length + ", ml = " + mirrorVideoLoop.length);
+			console.log("mirror = " + mirrorVideo.length + ", loop = " + mirrorVideoLoop.length);
 		}
 		
 		function drawPreview(){
@@ -207,15 +309,15 @@
 		};
 
 		function drawRequirements(){
-			printCenter("Give the webcam permission ^^^");
+			printCenter("Requires the Chrome browser. Click 'Allow' above to activate webcam.");
 		};
 
 		function drawStartButton(){
-			printCenter("Click here to begin");
+			printCenter("Make your browser window large, then click here to begin.");
 		};
 
 		function drawInstructions(){
-			printCenter("Center your face. Look into the camera. Hit space to record. Don't look away.");
+			printCenter("Center your face. Relax, look right into the camera, and hit space to record. Don't look away.");
 		};
 
 
