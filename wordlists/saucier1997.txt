@@ -1,0 +1,345 @@
+From Effects of Variable Selection on the Factor Structure of Person Descriptors
+(Saucier, 1997)
+
+ocr_Saucier.Variable.Selection.JPSP.97 -p.1309
+
+
+Three factors (broad dispositions selection)
+
+I
+
+.62 Self-confident
+.61 Confident
+.49 Assertive
+.47 Persuasive
+.45 Bold
+.37 Persistent
+.37 Strong
+.37 Competitive
+.37 Energetic
+.36 Brave
+.35 Forward
+.34 Direct
+.32 Straightforward
+.31 Outspoken
+.31 Adventurous
+.30 Tough
+-.39 Self-conscious
+-.41 Shy
+-.43 Bashful
+
+II
+
+.67 Kind-hearted
+.63 Kind
+.62 Warm-hearted
+.61 Warm
+.58 Giving
+.58 Cheerful
+.57 Friendly
+.56 Gentle
+.56 Caring
+.54 Pleasant
+-.42 Unfriendly
+-.42 Obsessive
+-.43 Hot-tempered
+-.45 Negative
+-.45 Argumentative
+-.46 Demanding
+-.46 Critical
+-.49 Arrogant
+-.50 Self-centered
+-.54 Selfish
+
+III
+
+.58 Practical
+.57 Sensible
+.53 Realistic
+.52 Dependable
+.52 Responsible
+.51 Reliable
+.SO Careful
+.50 Trustworthy
+.49 Honest
+.45 Logical
+.45 Prompt
+.44 Conscientious
+.44 Cautious
+.43 Ethical
+.42 Stable
+.42 Truthful
+.40 Serious
+-.29 Unpredictable
+-.33 Childish
+-.35 Reckless
+
+
+Five factors (dispositions and stales selection) 
+
+I. EXTRAVERSION
+
+.52 Outgoing
+.49 Assertive
+.48 Aggressive
+.43 Talkative
+.42 Bold
+.41 Energetic
+.40 Excited
+.37 Outspoken
+.35 Competitive
+.30 Uninhibited
+.28 Direct
+.24 Brave
+-.34 Alone
+-.37 Embarrassed
+-.39 Sleepy
+-.46 Quiet
+-.52 Bashful
+-.54 Shy
+
+II. AGREEABLENESS
+
+.66 Kind~hearted
+.66 Warm-hearted
+.64 Caring
+.62 Compassionate
+.61 Giving
+.60 Warm
+.60 Kind
+.57 Sympathetic
+.54 Gentle
+.47 Sensitive
+.46 Affectionate
+.44 Generous
+.44 Thoughtful
+.40 Romantic
+.38 Sentimental
+.36 Forgiving
+-.35 Critical
+-.38 Mean
+-.43 Arrogant
+-.44 Selfish
+
+III. CONSCIENTIOUSNESS
+
+.50 Organized
+.49 Prompt
+.48 Thorough
+.48 Consistent
+.48 Efficient
+.46 Neat
+.43 Punctual
+.41 Alert
+.27 Awake
+-.28 Irrational
+-.37 Noisy
+-.38 Childish
+
+IV. EMOTIONAL STABILITY
+
+.65 Relaxed
+.64 Happy
+.62 Secure
+.61 Satisfied
+.58 Carefree
+.56 Peaceful
+.54 Optimistic
+.54 Easygoing
+.50 Self-confident
+.50 Comfortable
+-.54 Annoyed
+-.54 Moody
+-.57 Irritated
+-.57 Tense
+-.59 Depressed
+-.59 Disappointed
+-.59 Upset
+-.59 Frustrated
+-.65 Sad
+-.65 Troubled
+
+V. INTELLECT
+
+.69 Smart
+.69 Intelligent
+.63 Intellectual
+.63 Knowledgeable
+.59 Talented
+.57 Brilliant
+.54 Bright
+.53 Wise
+.52 Gifted
+.SO Skilled
+.49 Thinking
+.49 Imaginative
+.48 Skillful
+.47 Clever
+.47 Educated
+.46 Creative
+-.26 Inexperienced
+-.30 Naive
+-.31 Ignorant
+-.40 Uneducated
+
+
+Seven Factors:
+
+I: Extraversion 
+
+.57 Outgoing 
+.54 Talkative 
+.47 Outspoken 
+.45 Forward 
+.43 Expressive 
+.43 Loud 
+.42 Bold 
+.40 Noisy 
+.39 Dominant 
+.37 Colorful 
+.36 Excited 
+.32 Uninhibited 
+.28 Direct 
+-.30 Private 
+-.30 Embarrassed
+-.52 Bashful 
+-.54 Soft-spoken 
+-.56 Shy 
+-.59 Quiet
+
+
+II: Agreeableness 
+
+.66 Kind~bearted 
+.63 Warm~hearted 
+.62 Kind 
+.60 Caring 
+.59 Compassionate 
+.58 Giving 
+.47 Considerate 
+.47 Motherly 
+.46 Supportive 
+.45 Helpful 
+-.30 Materialistic
+-.32 Conceited 
+-.35 Snobbish 
+-.35 Inconsiderate 
+-.37 Greedy 
+-.40 Cocky 
+-.44 Stuck-up 
+-.46 Self-centered 
+-.50 Selfish 
+-.50 Arrogant
+
+
+III: Conscientiousness
+
+.55 Organized 
+.54 Neat 
+.48 Prompt 
+.43 Strict 
+.43 Proper 
+.42 Punctual 
+.37 Useful 
+-.26 Abnormal 
+-.38 Strange 
+-.40 Sloppy 
+-.42 Messy 
+-.47 Weird
+
+
+IV: Emotional Stability 
+
+.63 Happy 
+.59 Relaxed 
+.55 Optimistic 
+.55 Carefree 
+.52 Positive 
+.52 Joyful 
+.51 Cheerful 
+.SO Pleased 
+.48 Easygoing 
+.47 Comfortable 
+-.43 Grumpy 
+-.44 Crabby 
+-.47 Bitter 
+-.49 Annoyed 
+-.50 Negative 
+-.51 Moody 
+-.52 Irritated 
+-.55 Tense 
+-.57 Angry 
+-.57 Upset
+
+
+V: Intellect 
+
+.59 Intelligent 
+.56 Intellectual 
+.55 Brilliant 
+.55 Knowledgeable 
+.55 Exceptional 
+.54 Talented 
+.52 Excellent 
+.52 Gifted 
+.50 Extraordinary 
+.49 Skilled 
+.48 Wise 
+.45 Skillful 
+.45 Outstanding 
+.45 Thinking 
+.45 Remarkable 
+-.27 Weak
+-.29 Inexperienced 
+-.31 Naive 
+-.33 Narrow-minded 
+-.38 Dependent
+
+
+VI: Sixth factor
+
+.65 Beautiful 
+.64 Good-looking 
+.63 Gorgeous 
+.62 Attractive 
+.59 Cute 
+.57 Glamorous 
+.57 Pretty 
+.56 Sexy 
+.55 Appealing 
+.55 Lovely 
+.53 Adorable 
+.52 Desirable 
+.47 Terrific 
+.47 Seductive 
+.45 Delightful 
+.45 Great 
+-.28 Big 
+-.38 Chubby 
+-.45 Fat 
+-.53 Unattractive
+
+
+VII: Seventh factor
+
+.57 Evil 
+.56 Good-for-nothing
+.53 Insane 
+.52 Terrible 
+.52 Corrupt 
+.51 Awful 
+.50 Cruel 
+.49 Retarded 
+.47 Dumb 
+.47 Bad 
+.46 Disgusting 
+.45 Pathetic 
+.44 Dangerous 
+.44 Homeless 
+.43 Abusive 
+.41 Senile 
+.40 Incompetent 
+.38 Violent 
+.37 Frightening 
+.36 Blind 
+.36 Stupid
