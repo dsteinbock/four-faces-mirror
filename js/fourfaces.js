@@ -15,11 +15,6 @@
 			delayImages							= new Array(),
 			bufferSize							= 50,
 			fontSize								= 20,
-			doRecord								= false,
-			doStart									= false,
-			doSplit									= false,
-			showHelp								= false,
-			showLeft								= true,
 			centerlineLeft					= 0,
 			centerlineRight					= 0,
 			mirrorVideo							= new Array(),
@@ -34,18 +29,42 @@
 			START										: {name: "Start"},
 			INTRO										: {name: "Intro"},
 			RECORD									: {name: "Record"},
-			PLAYBACK								: {name: "Playback"}
+			PLAYBACK								: {name: "Playback"},
+			QUESTIONS								: {name: "Questions"}
 		},
-		currentMode							= MODE.WEBCAM;
+			doStart									= false,
+			doSplit									= true,
+			doRecord								= false,
+			doQuestions							= false,
+			doAnswers								= false,
+			doInitializeInterview		= true,
+			showHelp								= false,
+			showLeft								= true,
+			currentMode							= MODE.WEBCAM;
 		var KEY = { 
-			RECORD_TOGGLE									: {value: '32', key: 'space'},
-			HELP_TOGGLE										: {value: '104', key: 'h'},
-			SHIFT_LEFT										: {value: '122', key: 'z'},
-			SHIFT_RIGHT										: {value: '120', key: 'x'},
-			SPLIT_TOGGLE									: {value: '115', key: 's'},
-			SPLIT_LEFT										: {value: p.LEFT, key: 'left'},
-			SPLIT_RIGHT										: {value: p.RIGHT, key: 'right'}
+			RECORD_TOGGLE						: {value: '32', key: 'space'},
+			HELP_TOGGLE							: {value: '104', key: 'h'},
+			SHIFT_LEFT							: {value: '122', key: 'z'},
+			SHIFT_RIGHT							: {value: '120', key: 'x'},
+			SPLIT_TOGGLE					  : {value: '115', key: 's'},
+			SPLIT_LEFT						  : {value: p.LEFT, key: 'left'},
+			SPLIT_RIGHT						  : {value: p.RIGHT, key: 'right'},
+			ENTER									  : {value: p.ENTER, key: 'enter'},
+			RETURN								  : {value: p.RETURN, key: 'return'},
 		};
+		var interviewAnswers,
+				interviewQuestions,
+				currentQuestion				= 0,
+				wordList 				= [ "masculine",
+														"young",
+														"cautious",
+														"wise",
+														"practical",
+														"spiritual",
+														"funny",
+														"happy",
+														"risk-taking",
+														"romantic" ];
 
 		p.setup = function () {
 			 p.size(initWidth, initHeight);
@@ -87,6 +106,7 @@
 					drawGuidelines();
 					drawInstructions();
 					initCenterline();
+					initInterviewQuestions();
 					if(doRecord)
 						currentMode = MODE.RECORD;
 					break;
@@ -100,15 +120,35 @@
 				}
 				case MODE.PLAYBACK: {
 					playbackMirror();
-					if( doSplit ){
-						splitMirror();
-					}
+/* 					if( doSplit ) */
+					splitMirror();		// split by default
 					drawHelp();
 					if(doRecord){
 						resetMirror();
 						doRecord = !doRecord;
 						currentMode = MODE.INTRO;
 					}
+					if(doQuestions)
+						currentMode = MODE.QUESTIONS;
+					break;
+				}
+				case MODE.QUESTIONS: {
+					playbackMirror();
+/* 					if( doSplit ) */
+					splitMirror();		// split by default
+					drawHelp();
+					drawQuestion();
+					if(doRecord){
+						resetMirror();
+						doRecord = !doRecord;
+						currentMode = MODE.INTRO;
+					}
+					if(doAnswers)
+						currentMode = MODE.ANSWERS;
+					break;
+				}
+				case MODE.ANSWERS: {
+					drawAnswers();
 					break;
 				}
 				default: { alert("Error: unknown mode!") }
@@ -138,6 +178,7 @@
 			s = 115, S = 83, a = 97, A = 65, z = 122, Z = 90, space = 32, arrows are coded
 		*/
 		p.keyPressed = function doKey(){
+			console.log("Key: " + p.str(p.key) + " " + p.key + ", KeyCode: " + p.keyCode);
 			if( p.key == p.CODED ){
 				switch( p.keyCode ){
 					case KEY.SPLIT_LEFT.value: {
@@ -181,6 +222,19 @@
 							centerlineRight++;
 						break;
 					}
+					case KEY.ENTER.value:
+					case KEY.RETURN.value: 
+					case "10": {
+						doQuestions = true;
+						if( currentMode == MODE.QUESTIONS ){		// Submit answer to the question
+							var answer = showLeft ? 0 : 1;				// left side visible = 0, right side = 1
+							interviewAnswers.push( answer );
+							currentQuestion++;
+							if( currentQuestion == interviewQuestions.length )
+								doAnswers = true;
+						}
+						break;
+					}
 					default: break;
 				}				
 			}
@@ -202,6 +256,25 @@
 			}
 		}
 		
+		/* Display interview questions to the user */
+		function drawQuestion() {
+			var msg, tw;
+
+			p.fill(255);
+			msg = interviewQuestions[currentQuestion];
+			tw = p.textWidth(msg);
+			p.text(msg, (cw-tw)/2, ch-30);			 
+			p.noFill();
+		}
+		/* Display summary of interview */
+		function drawAnswers() {
+			// not implemented yet
+			doQuestions = false;
+			doAnswers = false;
+			printCenter("ANSWERS!!!!!!!!");
+			currentMode = MODE.PLAYBACK;
+		}
+
 		/* FUNCTION: toggle display of keyboard controls */
 		function drawHelp(){
 			var msg, tw;
@@ -216,7 +289,7 @@
 				msg = "h = help (dev version)";
 				tw = p.textWidth(msg);
 			}
-			p.text(msg, 10, ch-30);
+			p.text(msg, 10, 30);
 			p.noFill();
 		}
 
@@ -309,7 +382,7 @@
 		};
 
 		function drawRequirements(){
-			printCenter("Warning: Development Version. Requires the Chrome browser. Click 'Allow' above to activate webcam.");
+			printCenter("Requires the Chrome browser. Click 'Allow' above to activate webcam.");
 		};
 
 		function drawStartButton(){
@@ -345,6 +418,20 @@
 			canvasNode.style.top = (ph-canvasNode.height)/2 + "px";
 			canvasNode.style.left = (pw-canvasNode.width)/2 + "px"; 
 		};
+		
+		function initInterviewQuestions() {
+			if( doInitializeInterview ){
+				doInitializeInterview = false;
+				var prefix = "Which side is more ";
+				interviewAnswers 		= new Array(),
+				interviewQuestions	= new Array();
+				
+				for(var i=0; i<wordList.length; ++i){
+					interviewQuestions.push( prefix + wordList[i] + "?");
+					console.log("pushing " + interviewQuestions[i]);
+				}
+			}
+		}
 	}
 
 
