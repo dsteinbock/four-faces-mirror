@@ -282,11 +282,11 @@
 			
 			if(showHelp){
 				p.fill(255);
-				msg = "h = help   SPACE = re-record   LEFT/RIGHT = split   z/x = adjust   s = split on/off";
+				msg = "h = help   SPACE = re-record   LEFT/RIGHT = split   z/x = fine-tune the split";
 				tw = p.textWidth(msg);
 			}
 			else {
-				p.fill(160);
+				p.fill(255);
 				msg = "h = help (dev version)";
 				tw = p.textWidth(msg);
 			}
@@ -399,7 +399,8 @@
 			var twidth = p.textWidth(msg);
 			p.fill(20);
 /* 			p.rect(cw/2-twidth/2-10,ch/2-fontSize/2-10-110,twidth+20,fontSize+20); */
-			p.rect(100,ch/2-fontSize/2-10-110,cw-200,fontSize+20);
+/* 			p.rect(100,ch/2-fontSize/2-10-110,cw-200,fontSize+20); */
+			p.rect(0,ch/2-fontSize/2-10-110,cw-1,fontSize+20);
 			p.fill(255);
 			p.text(msg, (cw-twidth)/2, ch/2-100);			 
 		}

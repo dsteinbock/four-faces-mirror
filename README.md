@@ -1,5 +1,5 @@
 # Four Faces Mirror
-## v0.4 - Split Mode
+## v0.5 - True Mirror (first public release)
 
 ### What is it?
 
@@ -13,7 +13,7 @@ The software is written in pure javascript, employing getUserMedia for webcam ac
 
 ### Live Demo
 
-Live demo version at http://dev.fourfaces.org. (Warning: under active development and may be broken at any given time!)
+Live demo version at http://fourfaces.org. (Warning: under active development and may be broken at any given time!)
 
 ### How to use
 
