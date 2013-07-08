@@ -49,6 +49,7 @@
 			SPLIT_TOGGLE					  : {value: '115', key: 's'},
 			SPLIT_LEFT						  : {value: p.LEFT, key: 'left'},
 			SPLIT_RIGHT						  : {value: p.RIGHT, key: 'right'},
+			SPLIT_NONE						  : {value: p.UP, key: 'up'},
 			ENTER									  : {value: p.ENTER, key: 'enter'},
 			RETURN								  : {value: p.RETURN, key: 'return'},
 		};
@@ -189,6 +190,11 @@
 						showLeft = false;
 						break;
 					}
+					case KEY.SPLIT_NONE.value: {
+						doSplit = false;
+						showLeft = false;
+						break;
+					}
 					default: break;
 				}
 			}
@@ -293,11 +299,20 @@
 
 		/* FUNCTION splitMirror: show only half the image at a time */
 		function splitMirror(){
+			p.noStroke();
 			p.fill(0);
-			if(showLeft)
-				p.rect(centerlineLeft, 0, cw - centerlineLeft, ch);
-			else
-				p.rect(0, 0, centerlineRight, ch);
+			if( doSplit ){
+				ctx.globalAlpha = 0.9;
+				if(showLeft)
+					p.rect(centerlineLeft, 0, cw - centerlineLeft, ch);
+				else
+					p.rect(0, 0, centerlineRight, ch);
+			}
+			else {
+				ctx.globalAlpha = 0.7;
+				p.rect(0, 0, cw-1, ch-1);
+			}
+			ctx.globalAlpha = 1;
 			p.noFill();
 		}
 
