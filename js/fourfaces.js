@@ -120,7 +120,6 @@
 				}
 				case MODE.PLAYBACK: {
 					playbackMirror();
-/* 					if( doSplit ) */
 					splitMirror();		// split by default
 					drawHelp();
 					if(doRecord){
@@ -128,10 +127,8 @@
 						doRecord = !doRecord;
 						currentMode = MODE.INTRO;
 					}
-/*
 					if(doQuestions)
 						currentMode = MODE.QUESTIONS;
-*/
 					break;
 				}
 				case MODE.QUESTIONS: {
@@ -179,7 +176,7 @@
 			s = 115, S = 83, a = 97, A = 65, z = 122, Z = 90, space = 32, arrows are coded
 		*/
 		p.keyPressed = function doKey(){
-			console.log("Key: " + p.str(p.key) + " " + p.key + ", KeyCode: " + p.keyCode);
+/* 			console.log("Key: " + p.str(p.key) + " " + p.key + ", KeyCode: " + p.keyCode); */
 			if( p.key == p.CODED ){
 				switch( p.keyCode ){
 					case KEY.SPLIT_LEFT.value: {
@@ -287,7 +284,7 @@
 			}
 			else {
 				p.fill(255);
-				msg = "h = help (dev version)";
+				msg = "h = help";
 				tw = p.textWidth(msg);
 			}
 			p.text(msg, 10, 30);
