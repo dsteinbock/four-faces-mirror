@@ -128,13 +128,14 @@
 						doRecord = !doRecord;
 						currentMode = MODE.INTRO;
 					}
+/*
 					if(doQuestions)
 						currentMode = MODE.QUESTIONS;
+*/
 					break;
 				}
 				case MODE.QUESTIONS: {
 					playbackMirror();
-/* 					if( doSplit ) */
 					splitMirror();		// split by default
 					drawHelp();
 					drawQuestion();
