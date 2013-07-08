@@ -1,0 +1,43 @@
+Development and Validation of an International English Big-Five Mini-Markers
+Edmund R. Thompson
+
+1. Shy
+2. Talkative
+3. Energetic
+4. Quiet
+5. Extraverted
+6. Outgoing
+7. Reserved
+8. Untalkative
+9. Creative
+10. Intellectual
+11. Unimaginative
+12. Artistic
+13. Intelligent
+14. Philosophical
+15. Deep
+16. Uncreative
+17. Envious
+18. Emotional
+19. Anxious
+20. Unworried
+21. Jealous
+22. Unenvious
+23. Moody
+24. Unanxious
+25. Efficient
+26. Disorganized
+27. Careless
+28. Untidy
+29. Neat
+30. Inefficient
+31. Systematic
+32. Organized
+33. Kind
+34. Sympathetic
+35. Harsh
+36. Cooperative
+37. Unkind
+38. Warm
+39. Rude
+40. Inconsiderate
