@@ -37,6 +37,7 @@
 			doRecord								= false,
 			doQuestions							= false,
 			doAnswers								= false,
+			doDebug									= false,
 			doInitializeInterview		= true,
 			showHelp								= false,
 			showLeft								= true,
@@ -176,7 +177,7 @@
 			s = 115, S = 83, a = 97, A = 65, z = 122, Z = 90, space = 32, arrows are coded
 		*/
 		p.keyPressed = function doKey(){
-/* 			console.log("Key: " + p.str(p.key) + " " + p.key + ", KeyCode: " + p.keyCode); */
+			if(doDebug) console.log("Key: " + p.str(p.key) + " " + p.key + ", KeyCode: " + p.keyCode);
 			if( p.key == p.CODED ){
 				switch( p.keyCode ){
 					case KEY.SPLIT_LEFT.value: {
@@ -326,11 +327,16 @@
 			mirrorVideo.pop();
 			mirrorVideoLoop = mirrorVideoLoop.concat( mirrorVideo.reverse());
 			mirrorVideoLoop.pop();
-			console.log("mirror = " + mirrorVideo.length + ", loop = " + mirrorVideoLoop.length);
+			if(doDebug) console.log("mirror = " + mirrorVideo.length + ", loop = " + mirrorVideoLoop.length);
 		}
 		
 		function drawPreview(){
 			ctx.drawImage(WEBCAM.video, 0, 0, cw, ch);		// draw frame from webcam
+			var img = p.get(0,0,cw,ch);
+			p.pushMatrix();
+			p.scale(-1.0, 1.0);
+			p.set( -(img.width), 0, img);
+ 			p.popMatrix();
 		}
 		
 		/* saves the current screen to buffer, then draws from buffer when it's full */
@@ -427,7 +433,7 @@
 				
 				for(var i=0; i<wordList.length; ++i){
 					interviewQuestions.push( prefix + wordList[i] + "?");
-					console.log("pushing " + interviewQuestions[i]);
+					if(doDebug) console.log("pushing " + interviewQuestions[i]);
 				}
 			}
 		}
