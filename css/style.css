@@ -3,7 +3,7 @@ html, body {
   height: 100%;
   margin: 0px;
   padding: 0px;
-  overflow: hidden;
+  overflow: auto;
 }
 
 body {
@@ -43,5 +43,10 @@ canvas {
 	position:absolute; 
 	top:0;
 	left:0; 
+		border: 2px solid green;
 /* 	visibility: hidden;  */
+}
+
+#record-button {
+	margin: 640px auto 0px auto;
 }

@@ -1,6 +1,7 @@
 /*global Processing: true, processing: true, WEBCAM: true, $: true */
 /*jslint devel: true, browser: true, nomen: true, maxerr: 50, indent: 2 */
 
+
 (function () {
 	"use strict";
 		// Simple way to attach js code to the canvas is by using a function
@@ -8,6 +9,7 @@
 		var p											= processing,
 			ctx											= WEBCAM.ctx,
 			buf											= WEBCAM.buf,
+			js											= window,
 			width										= window.innerWidth,
 			height									= window.innerHeight,
 			initWidth								= 640,
@@ -67,7 +69,7 @@
 														"romantic" ];
 
 		p.setup = function () {
-			 p.size(initWidth, initHeight);
+			p.size(initWidth, initHeight);
 //			imgPixelData = p.pixels.toArray();
 			p.background(20,50,0);
 			p.loadPixels();
@@ -80,6 +82,16 @@
 			setCanvas();
 		};
 
+		function jsControlTower() {
+			if(js!=null) {
+				if( js.doRecord ){
+					canvas.focus();
+					doRecord = true;
+					js.doRecord = false;
+				}
+			}
+		}
+
 		// Override draw function, by default it will be called 60 times per second
 		p.draw = function () {
 			// update canvas dimensions to latest window size
@@ -87,6 +99,7 @@
 			ch = ctx.canvas.height;
 			p.pushMatrix();
 
+			jsControlTower();
 			switch( currentMode ){
 				case MODE.WEBCAM: {
 					drawRequirements();
@@ -332,12 +345,14 @@
 		}
 		
 		/* saves the current screen to buffer, then draws from buffer when it's full */
+/*
 		function drawDelay(){
 			delayImages.push(p.get(0,0,cw,ch));
 			if( delayImages.length > bufferSize) {
 				p.set( 0, 0, delayImages.shift());
 			}
 		}
+*/
 
 		function drawGuidelines(){
 			var padding = 40;
@@ -402,7 +417,7 @@
 		
 		function setCanvas(){
 			centerCanvas(document.getElementById('canvas1'));
-			centerCanvas(document.getElementById('buffer'));
+/* 			centerCanvas(document.getElementById('buffer')); */
 			document.getElementById('canvas1').focus();
 		};
 		
@@ -429,10 +444,18 @@
 				}
 			}
 		}
+		
+		p.mouseMoved = function() {
+	    p.line(p.mouseX,0,p.mouseX,height);
+	    p.line(0,p.mouseY,width,p.mouseY);
+	    p.redraw();
+	    if(js!=null){
+      	js.showXYCoordinates(p.mouseX, p.mouseY);
+			}
+		}
 	}
 
-
-	var canvas = document.getElementById("canvas1"),
-		p = new Processing(canvas, sketchProc);
+	var canvas = document.getElementById("canvas1");
+	var p      = new Processing(canvas, sketchProc);
 	// p.exit(); to detach it	 
 }());

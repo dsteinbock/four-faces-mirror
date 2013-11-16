@@ -1,24 +1,65 @@
 <html>
   <head>
-    <title>Four Faces</title>
+    <title>Four Faces MIR&#1071;OR</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    
-
-
   </head>
   <body>
     <video autoplay id="videostream"></video>
-<!--     <img src="img/si-logo.png" style="display: none" id="the-image"> -->
-<!-- 	<div id="container"> -->
-<!-- 	<center> -->
-     <canvas id="canvas1" tabindex="1"></canvas>
-<!--      <canvas id="buffer"></canvas> -->
-<!--      </center> -->
-<!--     </div> -->
+		
+      	<canvas id="canvas1" tabindex="1"></canvas>
+<!-- 				<canvas id="buffer"></canvas> -->
+
+
+    <div id="record-button" align="center" onclick="recordMirror('canvas1');">
+    	<img src="http://placehold.it/200x100&text=RECORD" />
+    </div>
+
+		<div id="coordinates">
+        x/y: <input type="textfield" id="xcoord">/<input type="textfield" id="ycoord">
+    </div>
+
+
+
+
+
+
+
 <!--     <canvas data-processing-sources="WebCam.pde" style="border: 1px solid black;"></canvas>  -->
+
 
     <script type="text/javascript" src="js/lib/processing-1.4.1.min.js"></script>
     <script type="text/javascript" src="js/webcam.js"></script>
-    <script type="text/javascript" src="js/fourfaces.js"></script>
+    <script type="text/javascript" src="js/fourfaces.js" data-processing-target="canvas1"></script>
+    
+    <script type="text/javascript">
+      var bound = false;
+      var pjs = null;
+      var doRecord = false;
+			
+      function bindJavascript() {
+        pjs = Processing.getInstanceById('canvas1');
+        if(pjs!=null) {
+          bound = true;
+        }
+        if(!bound) setTimeout(bindJavascript, 250);
+      }
+      bindJavascript();
+
+      function showXYCoordinates(x, y) {
+        document.getElementById('xcoord').value = x;
+        document.getElementById('ycoord').value = y;
+      }
+            
+	    function recordMirror(id) {
+	    	doRecord = true;
+				if( pjs != null ){
+/*
+	        pjs.fill(128);
+					pjs.rect(0,0,100,100);
+*/
+	      }
+	    }
+      </script>
+    
   </body>
 </html>
