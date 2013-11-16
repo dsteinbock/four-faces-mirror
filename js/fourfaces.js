@@ -33,6 +33,7 @@
 			PLAYBACK								: {name: "Playback"},
 			QUESTIONS								: {name: "Questions"}
 		},
+			initJSNeeded							= true,
 			doStart									= false,
 			doSplit									= true,
 			doRecord								= false,
@@ -82,16 +83,15 @@
 			setCanvas();
 		};
 
-		function jsControlTower() {
-			if(js!=null) {
-				if( js.doRecord ){
-					canvas.focus();
-					doRecord = true;
-					js.doRecord = false;
-				}
+		function initJS() {
+			if( initJSNeeded ){
+				js.doRecord = function () { doRecord = true; canvas.focus(); };
+				// Fill in triggers for state-change events: js.doMirror, etc. 
+
+				initJSNeeded = false;
 			}
 		}
-
+		
 		// Override draw function, by default it will be called 60 times per second
 		p.draw = function () {
 			// update canvas dimensions to latest window size
@@ -99,7 +99,7 @@
 			ch = ctx.canvas.height;
 			p.pushMatrix();
 
-			jsControlTower();
+			initJS();
 			switch( currentMode ){
 				case MODE.WEBCAM: {
 					drawRequirements();
@@ -452,6 +452,10 @@
 	    if(js!=null){
       	js.showXYCoordinates(p.mouseX, p.mouseY);
 			}
+		}
+		
+		function doShit() {
+			alert("Doing shit.");
 		}
 	}
 

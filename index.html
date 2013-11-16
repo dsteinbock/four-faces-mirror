@@ -10,7 +10,7 @@
 <!-- 				<canvas id="buffer"></canvas> -->
 
 
-    <div id="record-button" align="center" onclick="recordMirror('canvas1');">
+    <div id="record-button" align="center" onclick="recordMirror();">
     	<img src="http://placehold.it/200x100&text=RECORD" />
     </div>
 
@@ -34,12 +34,12 @@
     <script type="text/javascript">
       var bound = false;
       var pjs = null;
-      var doRecord = false;
+      var doRecord = null;
 			
       function bindJavascript() {
         pjs = Processing.getInstanceById('canvas1');
         if(pjs!=null) {
-          bound = true;
+          bound = true;					
         }
         if(!bound) setTimeout(bindJavascript, 250);
       }
@@ -50,8 +50,10 @@
         document.getElementById('ycoord').value = y;
       }
             
-	    function recordMirror(id) {
-	    	doRecord = true;
+	    function recordMirror() {
+	    	if( doRecord != null ){
+		    	doRecord();
+	    	}
 				if( pjs != null ){
 /*
 	        pjs.fill(128);
@@ -59,6 +61,7 @@
 */
 	      }
 	    }
+
       </script>
     
   </body>
