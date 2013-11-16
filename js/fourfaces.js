@@ -15,8 +15,7 @@
 			delayImages							= new Array(),
 			bufferSize							= 50,
 			fontSize								= 20,
-			centerlineLeft					= 0,
-			centerlineRight					= 0,
+			centerline							= 0,
 			mirrorVideo							= new Array(),
 			mirrorVideoLoop,
 			currentFrameIndex 			= 0,
@@ -168,9 +167,8 @@
 		}
 		
 		function initCenterline(){
-			if(centerlineLeft == 0){
-				centerlineLeft	= Math.floor(cw / 2);
-				centerlineRight	= Math.floor(cw / 2);
+			if(centerline == 0){
+				centerline	= Math.floor(cw / 2);
 			}
 		}
 		/* FUNCTION: doKey(): detect key presses and do something 
@@ -208,17 +206,11 @@
 						break;
 					}
 					case KEY.SHIFT_LEFT.value: {
-						if(showLeft)
-							centerlineLeft--;
-						else
-							centerlineRight--;
+						centerline--;
 						break;
 					}
 					case KEY.SHIFT_RIGHT.value: {										// x
-						if(showLeft)
-							centerlineLeft++;
-						else
-							centerlineRight++;
+						centerline++;
 						break;
 					}
 					case KEY.ENTER.value:
@@ -296,9 +288,9 @@
 		function splitMirror(){
 			p.fill(0);
 			if(showLeft)
-				p.rect(centerlineLeft, 0, cw - centerlineLeft, ch);
+				p.rect(centerline, 0, cw - centerline, ch);
 			else
-				p.rect(0, 0, centerlineRight, ch);
+				p.rect(0, 0, centerline, ch);
 			p.noFill();
 		}
 
