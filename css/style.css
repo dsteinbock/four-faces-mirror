@@ -9,44 +9,31 @@ html, body {
 body {
 	background: #333;
 }
-#canvas1 {
-/*
-	width: 100%;
-	height: 100%;
-*/
-	min-width: 640px;
-	min-height: 480px;
-/*
-	margin: 0px auto 0px auto;
-	display: inline;
-*/
-/* 	border: 2px solid #a00;  */
-}
 
-#buffer {
+.row {min-width:100% !important;}
+
+.row {border: 1px solid aqua;}
+.columns {border: 1px dashed red;}
+
+
+.canvas { 
 	border: 2px solid green;
+	display: inline;
 }
-#container {
-	width: 100%;
-	text-align:center;
-/*
-	min-width: 640px;
-	min-height: 480px;
-*/
+#mirror {
+	text-align: center;
 }
+#canvas1 {
 
+}
 #videostream {
 	display: none;
 }
 
-canvas { 
-	position:absolute; 
-	top:0;
-	left:0; 
-		border: 2px solid green;
-/* 	visibility: hidden;  */
+.orbit-class {
+	background-color: transparent;
 }
 
-#record-button {
-	margin: 640px auto 0px auto;
+.orbit-slides-container {
+	margin: 0 0 0 100px !important;
 }

@@ -1,22 +1,45 @@
-<html>
-  <head>
-    <title>Four Faces MIR&#1071;OR</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-  </head>
-  <body>
-    <video autoplay id="videostream"></video>
-		
-      	<canvas id="canvas1" tabindex="1"></canvas>
-<!-- 				<canvas id="buffer"></canvas> -->
-
-
-    <div id="record-button" align="center" onclick="recordMirror();">
-    	<img src="http://placehold.it/200x100&text=RECORD" />
+<!DOCTYPE html>
+<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+  <title>Four Faces MIR&#1071;OR</title>
+	<link rel="stylesheet" href="css/foundation.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="js/vendor/custom.modernizr.js"></script>
+</head>
+<body>
+  <div class="row">
+    <div class="small-centered" id="mirror">
+			<video autoplay id="videostream"></video>
+			<canvas id="canvas1" tabindex="1">Unfortunately, your browser does not support HTML5 canvas.</canvas>
+			<!-- 				<canvas id="buffer"></canvas> -->
     </div>
-
-		<div id="coordinates">
-        x/y: <input type="textfield" id="xcoord">/<input type="textfield" id="ycoord">
+  </div>
+  <div class="row">
+    <div class="small-centered">
+	    <ul data-orbit>
+			  <li>
+					<h1>Step 1</h1>
+					Some text for your edification. Record <a href="#" onclick="recordMirror();">this</a>.
+			  </li>
+			  <li>
+					<h1>Step 2</h1>
+					Some text for your edification.
+			  </li>
+			  <li>
+					<h1>Step 3</h1>
+					Some text for your edification.
+			  </li>
+			</ul>
+			
     </div>
+  </div>
+
+	<div id="coordinates">
+      x/y: <input type="textfield" id="xcoord">/<input type="textfield" id="ycoord">
+  </div>
 
 
 
@@ -27,42 +50,120 @@
 <!--     <canvas data-processing-sources="WebCam.pde" style="border: 1px solid black;"></canvas>  -->
 
 
-    <script type="text/javascript" src="js/lib/processing-1.4.1.min.js"></script>
-    <script type="text/javascript" src="js/webcam.js"></script>
-    <script type="text/javascript" src="js/fourfaces.js" data-processing-target="canvas1"></script>
-    
-    <script type="text/javascript">
-      var bound = false;
-      var pjs = null;
-      var doRecord = null;
-			
-      function bindJavascript() {
-        pjs = Processing.getInstanceById('canvas1');
-        if(pjs!=null) {
-          bound = true;					
-        }
-        if(!bound) setTimeout(bindJavascript, 250);
+  <script type="text/javascript" src="js/lib/processing-1.4.1.min.js"></script>
+  <script type="text/javascript" src="js/webcam.js"></script>
+  <script type="text/javascript" src="js/fourfaces.js" data-processing-target="canvas1"></script>
+  
+  <script type="text/javascript">
+    var bound = false;
+    var pjs = null;
+    var doRecord = null;
+		
+    function bindJavascript() {
+      pjs = Processing.getInstanceById('canvas1');
+      if(pjs!=null) {
+        bound = true;					
       }
-      bindJavascript();
+      if(!bound) setTimeout(bindJavascript, 250);
+    }
+    bindJavascript();
 
-      function showXYCoordinates(x, y) {
-        document.getElementById('xcoord').value = x;
-        document.getElementById('ycoord').value = y;
-      }
-            
-	    function recordMirror() {
-	    	if( doRecord != null ){
-		    	doRecord();
-	    	}
-				if( pjs != null ){
+    function showXYCoordinates(x, y) {
+      document.getElementById('xcoord').value = x;
+      document.getElementById('ycoord').value = y;
+    }
+          
+    function recordMirror() {
+    	if( doRecord != null ){
+	    	doRecord();
+    	}
+			if( pjs != null ){
 /*
-	        pjs.fill(128);
-					pjs.rect(0,0,100,100);
+        pjs.fill(128);
+				pjs.rect(0,0,100,100);
 */
-	      }
-	    }
+      }
+    }
 
-      </script>
-    
-  </body>
+    </script>
+  
+    <script>
+  document.write('<script src=' +
+  ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
+  '.js><\/script>')
+  </script>
+  
+  <script src="js/foundation.min.js"></script>
+  <script src="js/foundation/foundation.orbit.js"></script>
+  <!--
+  
+  <script src="js/foundation/foundation.js"></script>
+  
+  <script src="js/foundation/foundation.alerts.js"></script>
+  
+  <script src="js/foundation/foundation.clearing.js"></script>
+  
+  <script src="js/foundation/foundation.cookie.js"></script>
+  
+  <script src="js/foundation/foundation.dropdown.js"></script>
+  
+  <script src="js/foundation/foundation.forms.js"></script>
+  
+  <script src="js/foundation/foundation.joyride.js"></script>
+  
+  <script src="js/foundation/foundation.magellan.js"></script>
+  
+
+  
+  <script src="js/foundation/foundation.reveal.js"></script>
+  
+  <script src="js/foundation/foundation.section.js"></script>
+  
+  <script src="js/foundation/foundation.tooltips.js"></script>
+  
+  <script src="js/foundation/foundation.topbar.js"></script>
+  
+  <script src="js/foundation/foundation.interchange.js"></script>
+  
+  <script src="js/foundation/foundation.placeholder.js"></script>
+  
+  <script src="js/foundation/foundation.abide.js"></script>
+  
+  -->
+  
+  <script>
+		$(document).foundation('orbit', {
+		  animation: 'slide',
+		  timer_speed: 10000,
+		  pause_on_hover: true,
+		  resume_on_mouseout: false,
+		  animation_speed: 500,
+		  stack_on_small: true,
+		  navigation_arrows: true,
+		  slide_number: true,
+		  container_class: 'orbit-container',
+		  stack_on_small_class: 'orbit-stack-on-small',
+		  next_class: 'orbit-next',
+		  prev_class: 'orbit-prev',
+		  timer_container_class: 'orbit-timer',
+		  timer_paused_class: 'paused',
+		  timer_progress_class: 'orbit-progress',
+		  slides_container_class: 'orbit-slides-container',
+		  bullets_container_class: 'orbit-bullets',
+		  bullets_active_class: 'active',
+		  slide_number_class: 'orbit-slide-number',
+		  caption_class: 'orbit-caption',
+		  active_slide_class: 'active',
+		  orbit_transition_class: 'orbit-transitioning',
+		  bullets: false,
+		  timer: false,
+		  captions: false,
+		  next_on_click: false,
+		  variable_height: false,
+		  before_slide_change: function(){},
+		  after_slide_change: function(){}
+		});
+    $(document).foundation();
+  </script>
+</body>
 </html>
