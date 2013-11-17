@@ -13,28 +13,43 @@
   <div class="row">
     <div class="small-centered" id="mirror">
 			<video autoplay id="videostream"></video>
-			<canvas id="canvas1" tabindex="1">Unfortunately, your browser does not support HTML5 canvas.</canvas>
+			<canvas id="canvas1" tabindex="1">This software requires the latest Chrome, Firefox or Opera web browser.</canvas>
 			<!-- 				<canvas id="buffer"></canvas> -->
     </div>
   </div>
   <div class="row">
-    <div class="small-centered">
+    <div class="small-centered"><div class="slideshow-wrapper">
 	    <ul data-orbit>
-			  <li>
-					<h1>Step 1</h1>
-					Some text for your edification. Record <a href="#" onclick="recordMirror();">this</a>.
+			  <li data-orbit-slide="step-1">
+					<h3>Step 1</h3>
+					Requires the Chrome web browser. Make your browser window large or full screen, then click Next to begin. (<a href="#" onclick="startWebcamera();">Activate webcam</a>.)
 			  </li>
-			  <li>
-					<h1>Step 2</h1>
-					Some text for your edification.
+			  <li data-orbit-slide="step-2">
+					<h3>Step 2</h3>
+					Click Allow above right to permit webcam. (Auto-<span class="new-next">advance</span> when webcam is active.)
 			  </li>
-			  <li>
-					<h1>Step 3</h1>
-					Some text for your edification.
+			  <li data-orbit-slide="step-3">
+					<h3>Step 3</h3>
+					Center your face. Relax, look right into the camera. Don't look away. Record <a href="#" onclick="doRecord();">this</a>. (Big countdown timer on canvas.)
 			  </li>
-			</ul>
-			
-    </div>
+			  <li data-orbit-slide="step-4">
+					<h3>Step 4</h3>
+					Guide to right side. Timer.
+			  </li>
+			  <li data-orbit-slide="step-5">
+					<h3>Step 5</h3>
+					Left side. Timer.
+			  </li>
+			  <li data-orbit-slide="step-6">
+					<h3>Step 6</h3>
+					Flip back and forth.
+			  </li>
+			  <li data-orbit-slide="step-7">
+					<h3>Step 7</h3>
+					Describe.
+			  </li>
+			</ul>	
+    </div></div>
   </div>
 
 	<div id="coordinates">
@@ -58,6 +73,7 @@
     var bound = false;
     var pjs = null;
     var doRecord = null;
+    var startWebcam = null;
 		
     function bindJavascript() {
       pjs = Processing.getInstanceById('canvas1');
@@ -84,6 +100,10 @@
 */
       }
     }
+		function startWebcamera() {
+			if( startWebcam != null )
+				startWebcam();
+		}
 
     </script>
   
@@ -164,6 +184,11 @@
 		  after_slide_change: function(){}
 		});
     $(document).foundation();
+    
+    $('.new-next').on('click', function() {
+	    $('.orbit-next span').trigger('click');
+	    return false;
+		});
   </script>
 </body>
 </html>

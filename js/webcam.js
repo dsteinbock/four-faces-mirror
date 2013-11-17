@@ -21,7 +21,7 @@ var WEBCAM = {
     }
 
     if (!hasGetUserMedia()) {
-      alert('Four Faces uses bleeding edge technology that is only available in up-to-date browsers. Please upgrade here: http://browsehappy.com/');
+      alert('Four Faces uses bleeding edge technology that is only available in the latest versions of Chrome, Firefox and Opera.');
     }
 
     var self = this,
@@ -37,19 +37,25 @@ var WEBCAM = {
 
     // Not showing vendor prefixes or code that works cross-browser.
     // Some cross-browser hints here: http://www.html5rocks.com/en/tutorials/getusermedia/intro/
-    if (navigator.getUserMedia) {
-      navigator.getUserMedia({video: true}, function (stream) {
-        self.video.src = stream;
-        self.localMediaStream = stream;
-      }, onWebcamFail);
-    } else if (navigator.webkitGetUserMedia) {
-      navigator.webkitGetUserMedia({video: true}, function (stream) {
-        self.video.src = window.webkitURL.createObjectURL(stream);
-        self.localMediaStream = stream;
-      }, onWebcamFail);
-    } else {
-      onWebcamFail();
-    }
+		self.startWebcam = function () {
+	    navigator.getUserMedia  = navigator.getUserMedia ||
+			                          navigator.webkitGetUserMedia ||
+																navigator.mozGetUserMedia ||
+																navigator.msGetUserMedia;
+	    if (navigator.getUserMedia) {
+	      navigator.getUserMedia({video: true}, function (stream) {
+	        self.video.src = window.URL.createObjectURL(stream);
+	        self.localMediaStream = stream;
+	      }, onWebcamFail);
+	    } else if (navigator.webkitGetUserMedia) {
+	      navigator.webkitGetUserMedia({video: true}, function (stream) {
+	        self.video.src = window.webkitURL.createObjectURL(stream);
+	        self.localMediaStream = stream;
+	      }, onWebcamFail);
+	    } else {
+	      onWebcamFail();
+	    }    
+		}
   }
 };
 

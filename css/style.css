@@ -37,3 +37,7 @@ body {
 .orbit-slides-container {
 	margin: 0 0 0 100px !important;
 }
+
+.slideshow-wrapper {
+	background: #bbb;
+}

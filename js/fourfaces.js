@@ -34,7 +34,7 @@
 			QUESTIONS								: {name: "Questions"}
 		},
 			initJSNeeded							= true,
-			doStart									= false,
+			doStart									= true,
 			doSplit									= true,
 			doRecord								= false,
 			doQuestions							= false,
@@ -86,8 +86,11 @@
 		function initJS() {
 			if( initJSNeeded ){
 				js.doRecord = function () { doRecord = true; canvas.focus(); };
+				js.startWebcam = function () {
+					WEBCAM.startWebcam();
+					$('.orbit-next span').trigger('click');  // move the Orbit instructions forward};
+				}
 				// Fill in triggers for state-change events: js.doMirror, etc. 
-
 				initJSNeeded = false;
 			}
 		}
@@ -102,14 +105,16 @@
 			initJS();
 			switch( currentMode ){
 				case MODE.WEBCAM: {
-					drawRequirements();
-					if(WEBCAM.localMediaStream)
+/* 					drawRequirements(); */
+					if(WEBCAM.localMediaStream){
+						$('.orbit-next span').trigger('click');  // move the Orbit instructions forward
 						currentMode = MODE.START;
+					}
 					break;
 				}
 				case MODE.START: {
 					drawGuidelines();
-					drawStartButton();
+/* 					drawStartButton(); */
 					if(doStart)
 						currentMode = MODE.INTRO;
 					break;
@@ -117,7 +122,7 @@
 				case MODE.INTRO: {
 					drawPreview();
 					drawGuidelines();
-					drawInstructions();
+/* 					drawInstructions(); */
 					initCenterline();
 					initInterviewQuestions();
 					if(doRecord)
