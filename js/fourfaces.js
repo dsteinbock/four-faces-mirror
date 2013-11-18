@@ -24,7 +24,9 @@
 			mirrorDuration					= 90,
 			imgPixelData,
 			cw											= ctx.canvas.width,
-			ch											= ctx.canvas.height;
+			ch											= ctx.canvas.height,
+			cwPrevious							= cw,
+			chPrevious							= ch;
 		var MODE = { 
 			WEBCAM									: {name: "Webcam"},
 			START										: {name: "Start"},
@@ -95,11 +97,29 @@
 			}
 		}
 		
-		// Override draw function, by default it will be called 60 times per second
-		p.draw = function () {
-			// update canvas dimensions to latest window size
+		function refreshCanvasSize() {
+			cwPrevious = cw;
+			chPrevious = ch;
 			cw = ctx.canvas.width;
 			ch = ctx.canvas.height;
+			/* TODO:
+			 * Detect re-size.
+			 	 If playback mode,
+			 	 	 update mirrorVideoLoopPlayback with resized frames from the original mirrorVideoLoop
+				 	 	 (if slow, pause playback for a half-sec (noLoop), until resize settles down)
+			 	 	   (also, consider rebuilding the loop from orig video as well in this step, to save half the copying)
+			 	 	 update mask rectangle & centerline & whatever else
+			 */
+			if( cw != cwPrevious || ch != chPrevious ){
+				if( currentMode == MODE.PLAYBACK ){
+					
+				}
+			}
+		}
+
+		// Override draw function, by default it will be called 60 times per second
+		p.draw = function () {
+			refreshCanvasSize();      // update canvas dimensions to latest window size
 			p.pushMatrix();
 
 			initJS();
@@ -257,6 +277,7 @@
 		function playbackMirror(){
 			if(currentFrameIndex < mirrorVideoLoop.length) {
 				var currentFrame = mirrorVideoLoop[currentFrameIndex];
+/* 				currentFrame.resize(cw, ch); */
 				p.set( 0, 0, currentFrame);
 				currentFrameIndex++;
 			}
@@ -333,8 +354,8 @@
 		}
 		
 		function buildLoopVideo(){
-			mirrorVideoLoop = mirrorVideo.slice();
-			mirrorVideo.pop();
+			mirrorVideoLoop = mirrorVideo.slice();		// copies all of mirrorVideo array to mirrorVideoLoop
+			mirrorVideo.pop();												// remove the last frame of video (so we don't dupe the middle frame)
 			mirrorVideoLoop = mirrorVideoLoop.concat( mirrorVideo.reverse());
 			mirrorVideoLoop.pop();
 			if(doDebug) console.log("mirror = " + mirrorVideo.length + ", loop = " + mirrorVideoLoop.length);
