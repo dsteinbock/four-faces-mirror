@@ -20,6 +20,7 @@
 			centerline							= 0,
 			mirrorVideo							= new Array(),
 			mirrorVideoLoop,
+			mirrorVideoLoopPlayback,
 			currentFrameIndex 			= 0,
 			mirrorDuration					= 90,
 			imgPixelData,
@@ -112,7 +113,8 @@
 			 */
 			if( cw != cwPrevious || ch != chPrevious ){
 				if( currentMode == MODE.PLAYBACK ){
-					
+					resizeMirrorVideo();
+					console.log("cw = " + cw + ", ch = " + ch);
 				}
 			}
 		}
@@ -275,9 +277,8 @@
 
 		/* Playback mirror video */
 		function playbackMirror(){
-			if(currentFrameIndex < mirrorVideoLoop.length) {
-				var currentFrame = mirrorVideoLoop[currentFrameIndex];
-/* 				currentFrame.resize(cw, ch); */
+			if(currentFrameIndex < mirrorVideoLoopPlayback.length) {
+				var currentFrame = mirrorVideoLoopPlayback[currentFrameIndex];
 				p.set( 0, 0, currentFrame);
 				currentFrameIndex++;
 			}
@@ -358,7 +359,23 @@
 			mirrorVideo.pop();												// remove the last frame of video (so we don't dupe the middle frame)
 			mirrorVideoLoop = mirrorVideoLoop.concat( mirrorVideo.reverse());
 			mirrorVideoLoop.pop();
+			mirrorVideoLoopPlayback = mirrorVideoLoop.slice();	// create a copy for playback
 			if(doDebug) console.log("mirror = " + mirrorVideo.length + ", loop = " + mirrorVideoLoop.length);
+		}
+		
+		function resizeMirrorVideo(){
+			var widthNew  = cw, 
+					heightNew = ch,
+					widthOld  = mirrorVideoLoop[0].width,
+					heightOld = mirrorVideoLoop[0].height;
+					
+			for(var i=0; i<mirrorVideoLoop.length; ++i){
+				mirrorVideoLoopPlayback[i] = p.createImage(widthOld, heightOld, p.RGB); //blank image
+				mirrorVideoLoopPlayback[i].copy( mirrorVideoLoop[i], 0, 0, widthOld, heightOld, 0, 0, widthOld, heightOld);
+				mirrorVideoLoopPlayback[i].resize(widthNew, heightNew);
+			}	// resize every frame of the playback copy
+			console.log("copying " + mirrorVideoLoop[0].width + " x " + mirrorVideoLoop[0].height +
+																				 						 " to " + widthNew + " x " + heightNew);
 		}
 		
 		function drawPreview(){
