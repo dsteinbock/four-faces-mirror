@@ -80,7 +80,7 @@
 //			imgPixelData = p.pixels.toArray();
 			p.background(20,50,0);
 			p.loadPixels();
-			p.frameRate(15);		// will need to detect user's native webcam FPS somehow? Mine is 15, I think.
+/* 			p.frameRate(30);		// will need to detect user's native webcam FPS somehow? Mine is 15, I think. */
 			p.smooth();
 			p.noFill();
 			p.noStroke();
@@ -101,34 +101,12 @@
 			}
 		}
 		
-		function refreshCanvasSize() {
-			cw = ctx.canvas.width;
-			ch = ctx.canvas.height;
-			if( p.millis() > resizeTimer + 1000){		// check for resizes every 1000ms
-/*			OLD SLOW MANUAL RESIZING METHOD
-				if( cw != cwPrevious || ch != chPrevious )
-					resizing = true;
-				else if(resizing){
-					if( currentMode == MODE.PLAYBACK) resizeMirrorVideo();
-					resizing = false;
-				}
-*/
-				cwPrevious = cw;
-				chPrevious = ch;
-				resizeTimer = p.millis();
-			}
-
-			/* TODO:
-			 	 Update mask rectangle & centerlineOffset & whatever else
-			 */
-		}
-
 		// Override draw function, by default it will be called 60 times per second
 		p.draw = function () {
-			refreshCanvasSize();      // update canvas dimensions to latest window size
-			p.pushMatrix();
-
+			cw = ctx.canvas.width;      // update canvas dimensions to latest window size
+			ch = ctx.canvas.height;
 			initJS();
+			p.pushMatrix();
 			switch( currentMode ){
 				case MODE.WEBCAM: {
 /* 					drawRequirements(); */
@@ -495,7 +473,7 @@
 	    p.line(0,p.mouseY,width,p.mouseY);
 	    p.redraw();
 	    if(js!=null){
-      	js.showXYCoordinates(p.mouseX, p.mouseY);
+      	// run javascript stuff here
 			}
 		}
 		

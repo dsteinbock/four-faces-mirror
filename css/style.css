@@ -12,12 +12,16 @@ body {
 
 .row {min-width:100% !important;}
 
+/*
 .row {border: 1px solid aqua;}
 .columns {border: 1px dashed red;}
+*/
 
 
 .canvas { 
-	border: 2px solid green;
+/* 	border: 2px solid green; */
+	background: black;
+	background-color: black;
 	display: inline;
 }
 #mirror {

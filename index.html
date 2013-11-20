@@ -11,13 +11,6 @@
 </head>
 <body>
   <div class="row">
-    <div class="small-centered" id="mirror">
-			<video autoplay id="videostream"></video>
-			<canvas id="canvas1" tabindex="1">This software requires the latest Chrome, Firefox or Opera web browser.</canvas>
-			<!-- 				<canvas id="buffer"></canvas> -->
-    </div>
-  </div>
-  <div class="row">
     <div class="small-centered"><div class="slideshow-wrapper">
 	    <ul data-orbit>
 			  <li data-orbit-slide="step-1">
@@ -51,10 +44,16 @@
 			</ul>	
     </div></div>
   </div>
-
-	<div id="coordinates">
-      x/y: <input type="textfield" id="xcoord">/<input type="textfield" id="ycoord">
+    <div class="row">
+    <div class="small-centered" id="mirror">
+			<video autoplay id="videostream"></video>
+			<canvas id="canvas1" tabindex="1">This software requires the latest Chrome, Firefox or Opera web browser.</canvas>
+			<!-- 				<canvas id="buffer"></canvas> -->
+    </div>
   </div>
+
+
+
 
 
 
@@ -83,11 +82,6 @@
       if(!bound) setTimeout(bindJavascript, 250);
     }
     bindJavascript();
-
-    function showXYCoordinates(x, y) {
-      document.getElementById('xcoord').value = x;
-      document.getElementById('ycoord').value = y;
-    }
           
     function recordMirror() {
     	if( doRecord != null ){
