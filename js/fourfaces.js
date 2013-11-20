@@ -36,7 +36,7 @@
 			PLAYBACK								: {name: "Playback"},
 			QUESTIONS								: {name: "Questions"}
 		},
-			initJSNeeded							= true,
+			initJSNeeded						= true,
 			doStart									= true,
 			doSplit									= true,
 			doRecord								= false,
@@ -46,6 +46,9 @@
 			doInitializeInterview		= true,
 			showHelp								= false,
 			showLeft								= true,
+			resizing								= false,
+			timer									  = 0,
+			resizeTimer								= 0,
 			currentMode							= MODE.WEBCAM;
 		var KEY = { 
 			RECORD_TOGGLE						: {value: '32', key: 'space'},
@@ -99,25 +102,48 @@
 		}
 		
 		function refreshCanvasSize() {
-			cwPrevious = cw;
-			chPrevious = ch;
 			cw = ctx.canvas.width;
 			ch = ctx.canvas.height;
-			/* TODO:
-			 * Detect re-size.
-			 	 If playback mode,
-			 	 	 update mirrorVideoLoopPlayback with resized frames from the original mirrorVideoLoop
-				 	 	 (if slow, pause playback for a half-sec (noLoop), until resize settles down)
-			 	 	   (also, consider rebuilding the loop from orig video as well in this step, to save half the copying)
-			 	 	 update mask rectangle & centerline & whatever else
-			 */
-			if( cw != cwPrevious || ch != chPrevious ){
-				if( currentMode == MODE.PLAYBACK ){
-					resizeMirrorVideo();
-					console.log("cw = " + cw + ", ch = " + ch);
+			if( p.millis() > resizeTimer + 1000){		// check for resizes every 1000ms
+				if( cw != cwPrevious || ch != chPrevious )
+					resizing = true;
+				else if(resizing){
+					if( currentMode == MODE.PLAYBACK) resizeMirrorVideo();
+					resizing = false;
 				}
+				cwPrevious = cw;
+				chPrevious = ch;
+				resizeTimer = p.millis();
 			}
+				/*
+					if cw or ch are different than previous
+						set resize flag
+					else
+						if resize flag is on
+							resize video
+					update previous
+				*/
+
+			/* TODO:
+			 * Consider rebuilding the loop from orig video as well in this step, to save half the copying
+			 	 Update mask rectangle & centerline & whatever else
+			 */
 		}
+
+		function isResizing(){
+			return (cw != cwPrevious || ch != chPrevious);
+		}
+
+    function doResize() {
+			if(cw == cwPrevious && ch == chPrevious){
+				resizing = false;
+				if( currentMode == MODE.PLAYBACK ) resizeMirrorVideo();
+				p.loop();
+			}
+	    else
+	    	setTimeout(doResize(), 500);
+		}
+
 
 		// Override draw function, by default it will be called 60 times per second
 		p.draw = function () {
