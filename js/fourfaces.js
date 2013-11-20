@@ -105,45 +105,23 @@
 			cw = ctx.canvas.width;
 			ch = ctx.canvas.height;
 			if( p.millis() > resizeTimer + 1000){		// check for resizes every 1000ms
+/*			OLD SLOW MANUAL RESIZING METHOD
 				if( cw != cwPrevious || ch != chPrevious )
 					resizing = true;
 				else if(resizing){
 					if( currentMode == MODE.PLAYBACK) resizeMirrorVideo();
 					resizing = false;
 				}
+*/
 				cwPrevious = cw;
 				chPrevious = ch;
 				resizeTimer = p.millis();
 			}
-				/*
-					if cw or ch are different than previous
-						set resize flag
-					else
-						if resize flag is on
-							resize video
-					update previous
-				*/
 
 			/* TODO:
-			 * Speed up resizing. Consider rebuilding the loop from orig video as well in this step, to save half the copying
 			 	 Update mask rectangle & centerline & whatever else
 			 */
 		}
-
-		function isResizing(){
-			return (cw != cwPrevious || ch != chPrevious);
-		}
-
-    function doResize() {
-			if(cw == cwPrevious && ch == chPrevious){
-				resizing = false;
-				if( currentMode == MODE.PLAYBACK ) resizeMirrorVideo();
-				p.loop();
-			}
-	    else
-	    	setTimeout(doResize(), 500);
-		}
-
 
 		// Override draw function, by default it will be called 60 times per second
 		p.draw = function () {
@@ -305,7 +283,8 @@
 		function playbackMirror(){
 			if(currentFrameIndex < mirrorVideoLoopPlayback.length) {
 				var currentFrame = mirrorVideoLoopPlayback[currentFrameIndex];
-				p.set( 0, 0, currentFrame);
+/* 				p.set( 0, 0, currentFrame); */
+				p.image(currentFrame, 0, 0, cw, ch);
 				currentFrameIndex++;
 			}
 			else {
