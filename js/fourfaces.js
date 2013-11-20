@@ -125,7 +125,7 @@
 				*/
 
 			/* TODO:
-			 * Consider rebuilding the loop from orig video as well in this step, to save half the copying
+			 * Speed up resizing. Consider rebuilding the loop from orig video as well in this step, to save half the copying
 			 	 Update mask rectangle & centerline & whatever else
 			 */
 		}
