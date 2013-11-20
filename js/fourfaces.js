@@ -17,7 +17,7 @@
 			delayImages							= new Array(),
 			bufferSize							= 50,
 			fontSize								= 20,
-			centerline							= 0,
+			centerlineOffset				= 0,
 			mirrorVideo							= new Array(),
 			mirrorVideoLoop,
 			mirrorVideoLoopPlayback,
@@ -119,7 +119,7 @@
 			}
 
 			/* TODO:
-			 	 Update mask rectangle & centerline & whatever else
+			 	 Update mask rectangle & centerlineOffset & whatever else
 			 */
 		}
 
@@ -149,7 +149,6 @@
 					drawPreview();
 					drawGuidelines();
 /* 					drawInstructions(); */
-					initCenterline();
 					initInterviewQuestions();
 					if(doRecord)
 						currentMode = MODE.RECORD;
@@ -210,11 +209,6 @@
 			p.noFill();
 		}
 		
-		function initCenterline(){
-			if(centerline == 0){
-				centerline	= Math.floor(cw / 2);
-			}
-		}
 		/* FUNCTION: doKey(): detect key presses and do something 
 			s = 115, S = 83, a = 97, A = 65, z = 122, Z = 90, space = 32, arrows are coded
 		*/
@@ -250,11 +244,11 @@
 						break;
 					}
 					case KEY.SHIFT_LEFT.value: {
-						centerline--;
+						centerlineOffset -= 1 / cw;
 						break;
 					}
-					case KEY.SHIFT_RIGHT.value: {										// x
-						centerline++;
+					case KEY.SHIFT_RIGHT.value: {
+						centerlineOffset += 1 / cw;
 						break;
 					}
 					case KEY.ENTER.value:
@@ -331,6 +325,8 @@
 
 		/* FUNCTION splitMirror: show only half the image at a time */
 		function splitMirror(){
+			// centerlineOffset is expressed as a percentage of the current canvas width
+			var centerline = Math.ceil(Math.floor(cw / 2) + centerlineOffset*cw);
 			p.fill(0);
 			if(showLeft)
 				p.rect(centerline, 0, cw - centerline, ch);
@@ -388,7 +384,8 @@
 			var img = p.get(0,0,cw,ch);
 			p.pushMatrix();
 			p.scale(-1.0, 1.0);
-			p.set( -(img.width), 0, img);
+/* 			p.set( -(img.width), 0, img); */		// using image() instead, below
+			p.image( img, -(img.width), 0);
  			p.popMatrix();
 		}
 		
