@@ -45,3 +45,10 @@ body {
 .slideshow-wrapper {
 	background: #bbb;
 }
+
+.full-height { display: table;  }
+ 
+.sidebar { 
+  display: table-cell; 
+  background: #eeeeee;  
+}

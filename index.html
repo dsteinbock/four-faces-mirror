@@ -10,7 +10,14 @@
   <script src="js/vendor/custom.modernizr.js"></script>
 </head>
 <body>
-  <div class="row">
+  <div class="row" id="content">
+    <div class="small-centered" id="mirror">
+			<video autoplay id="videostream"></video>
+			<canvas id="canvas1" tabindex="1">This software requires the latest Chrome, Firefox or Opera web browser.</canvas>
+			<!-- 				<canvas id="buffer"></canvas> -->
+    </div>
+  </div>
+  <div class="row" id="guide">
     <div class="small-centered"><div class="slideshow-wrapper">
 	    <ul data-orbit>
 			  <li data-orbit-slide="step-1">
@@ -43,13 +50,6 @@
 			  </li>
 			</ul>	
     </div></div>
-  </div>
-    <div class="row">
-    <div class="small-centered" id="mirror">
-			<video autoplay id="videostream"></video>
-			<canvas id="canvas1" tabindex="1">This software requires the latest Chrome, Firefox or Opera web browser.</canvas>
-			<!-- 				<canvas id="buffer"></canvas> -->
-    </div>
   </div>
 
 
@@ -183,6 +183,17 @@
 	    $('.orbit-next span').trigger('click');
 	    return false;
 		});
+		//Initial load of page
+		$(document).ready(sizeContent);
+		
+		//Every resize of window
+		$(window).resize(sizeContent);
+		
+		//Dynamically assign height
+		function sizeContent() {
+		    var newHeight = $("html").height() - $("#guide").height() + "px";
+		    $("#content").css("height", newHeight);
+		}
   </script>
 </body>
 </html>

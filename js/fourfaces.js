@@ -80,7 +80,7 @@
 //			imgPixelData = p.pixels.toArray();
 			p.background(20,50,0);
 			p.loadPixels();
-/* 			p.frameRate(30);		// will need to detect user's native webcam FPS somehow? Mine is 15, I think. */
+			p.frameRate(30);		// will need to detect user's native webcam FPS somehow? Mine is 15, I think.
 			p.smooth();
 			p.noFill();
 			p.noStroke();
